@@ -7,7 +7,7 @@ Building-package:
   script:
     - python3 -m pip install --upgrade twine
     - python3 -m pip install --upgrade build
-    - python3 -m pip install -r requirements.txt
+    # - python3 -m pip install -r requirements.txt
     - python3 -m build
     - TWINE_USERNAME=gitlab-ci-token TWINE_PASSWORD=${CI_JOB_TOKEN} python3 -m twine upload --verbose --repository-url https://gitlab.reikiholding.com/api/v4/projects/14/packages/pypi dist/*
   tags:

@@ -6,3 +6,5 @@ locales
 __pycache__/
 *.py[cod]
 *$py.class
+
+dist

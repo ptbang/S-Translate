@@ -1,4 +1,0 @@
-GETTEXT_DEFAULT_DOMAIN = 's-translation-common'
-GETTEXT_DEFAULT_LANGUAGES = ['pl', 'en']
-GETTEXT_DEFAULT_LOCALE_DIR = 'locales'
-DEFAULT_LANGUAGE = 'pl'

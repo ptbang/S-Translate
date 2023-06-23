@@ -11,8 +11,8 @@ load_dotenv()
 
 # from tests import APP_NAME, LANGUAGES
 
-from src.s_translation.gettext import Translation, gettext
-from src.s_translation.message_creator import MessageCreator
+from s_translation.gettext import Translation, gettext
+from s_translation.message_creator import MessageCreator
 
 # _ = Translation(APP_NAME, 'pl').gettext()
 _ = gettext
@@ -21,7 +21,7 @@ _ = gettext
 def create_gettext_translation():
     creator = MessageCreator()
     creator.create_message_files()
-    creator.generate_message_objects()
+    # creator.generate_message_objects()
 
 
 if __name__ == '__main__':

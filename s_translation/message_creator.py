@@ -3,9 +3,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from .utils import print_color
-
 from .settings import GETTEXT_DEFAULT_DOMAIN, GETTEXT_DEFAULT_LANGUAGES, GETTEXT_DEFAULT_LOCALE_DIR
+from .utils import print_color
 
 
 class MessageCreatorError(Exception):
@@ -50,7 +49,7 @@ class MessageCreator:
         args = [
             'bash',
             '-c',
-            f'find -iname "*.py" | xargs xgettext -d {self.DOMAIN} -o {self.TEMPLATE_MESSAGE_FILE_NAME}',
+            f'find . -type f -iname "*.py" ! -path "./venv/*" ! -path "./env/*" | xargs xgettext -d {self.DOMAIN} -o {self.TEMPLATE_MESSAGE_FILE_NAME}',
         ]
         try:
             subprocess.run(args)

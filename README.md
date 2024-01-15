@@ -17,6 +17,7 @@ A package for easily using gettext in python projects
     ```text
     GETTEXT_DOMAIN=myapp
     LOCALE_DIR=locales  # => directory inside your project base dir to store the gettext translations
+    GETTEXT_LANGUAGES='pl,en'
     GETTEXT_LANGUAGE=pl
     ```
 

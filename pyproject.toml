@@ -16,10 +16,13 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+  "python-dotenv",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/pypa/sampleproject"
 "Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
 
 [tool.hatch.build]
-include = ["src/s_translation"]
+include = ["s_translation"]

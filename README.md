@@ -4,14 +4,15 @@ A package for easily using gettext in python projects
 
 ## Requirements
 
+- gettext installed in your system ([gettext](https://www.gnu.org/software/gettext/)
 - python 3.10
 - python package `python-dotenv` (`pip install python-dotenv`)
 
 
 ## Getting started
 
-
 ### With .env file
+
 1. First, create a new `.env` file in your project, eg:
 
     ```text
@@ -29,7 +30,15 @@ A package for easily using gettext in python projects
     load_dotenv()
     ```
 
-3. Create translations files:
+3. In your code add something with translation e.g.:
+
+    ```python
+    from s_translation import gettext as _
+
+    print(_("Hello, world"))
+    ```
+
+4. Create translations files `.po`:
 
     ```python
     from s_translation import MessageCreator
@@ -38,9 +47,10 @@ A package for easily using gettext in python projects
     creator.create_message_files()
     ```
 
-4. Next, put your translations to the created files in the previous step eg. `./locales/{language}/LC_MESSAGES/myapp.po`.
+5. Next, put your translations to the created files in the previous step
+   `./locales/{language}/LC_MESSAGES/myapp.po`  e.g. `./locales/pl/LC_MESSAGES/myapp.po`.
 
-5. So, now generate gettext message object files by:
+6. Finally, now generate gettext message object files `mo`:
 
     ```python
     from s_translation import MessageCreator
@@ -48,19 +58,20 @@ A package for easily using gettext in python projects
     creator = MessageCreator()
     creator.generate_message_objects()
     ```
-
-Now, your gettext translation is ready to use.
-
-```python
-from s_translation import gettext as _
-
-print(_("Hello, world"))
-```
-
 
 ### Without .env file
 
-1. Create translations files:
+1. In your code add something with translation e.g.:
+
+    ```python
+    from s_translation import Translation
+
+    _ = Translation(domain='myapp', language_code='pl', locale_dir='locales').gettext
+
+    print(_("Hello, world"))
+    ```
+
+2. Create translations files:
 
     ```python
     from s_translation import MessageCreator
@@ -69,9 +80,10 @@ print(_("Hello, world"))
     creator.create_message_files()
     ```
 
-2. Next, put your translations to the created files in the previous step `./locales/{language}/LC_MESSAGES/myapp.po` e.g. `./locales/pl/LC_MESSAGES/myapp.po`
+3. Next, put your translations to the created files in the previous step
+   `./locales/{language}/LC_MESSAGES/myapp.po` e.g. `./locales/pl/LC_MESSAGES/myapp.po`.
 
-3. So, now generate gettext message object files by:
+4. So, now generate gettext message object files `mo`:
 
     ```python
     from s_translation import MessageCreator
@@ -82,11 +94,3 @@ print(_("Hello, world"))
 
 
 Now, your gettext translation is ready to use.
-
-```python
-from s_translation import Translation
-
-_ = Translation(domain='myapp', language='pl', locale_dir='locales').gettext
-
-print(_("Hello, world"))
-```

@@ -29,22 +29,34 @@ class MessageCreator:
         self.LOCALE_DIR = locale_dir or os.getenv('GETTEXT_LOCALE_DIR', GETTEXT_DEFAULT_LOCALE_DIR)
         self.TEMPLATE_MESSAGE_FILE_NAME = f'{self.LOCALE_DIR}/{self.DOMAIN}.pot'
 
-    def _get_locale_directory(self, language: str) -> str:
+    def _get_locale_dir_by_language(self, language: str) -> str:
         return f'{self.LOCALE_DIR}/{language}/{self.MESSAGES_PATH_NAME}'
 
     def create_message_files(self) -> None:
+        """
+        Creates a template message file .pot in the dir `{self.LOCALE_DIR}/{self.DOMAIN}.pot`
+        Creates message files .po for each language or updates them if existing
+        """
         print_color(f"Starting the creation international message files for domain {self.DOMAIN} process:", 'BOLD')
-        self.create_directories()
-        if self.create_template_message_file():
-            self.make_locale_message_files()
+        self._create_directories()
+        if self._create_template_message_file():
+            self._make_locale_message_files()
             print_color("The gettext message files creation process was SUCCESSFUL", 'BOLD')
+        else:
+            print_color("Please create at least one message to translate in your code", 'BOLD')
 
-    def create_directories(self) -> None:
+    def _create_directories(self) -> None:
+        """
+        Creates directories for each language
+        """
         for language in self.LANGUAGES:
-            path = self._get_locale_directory(language)
+            path = self._get_locale_dir_by_language(language)
             Path(path).mkdir(parents=True, exist_ok=True)
 
-    def create_template_message_file(self) -> bool:
+    def _create_template_message_file(self) -> bool:
+        """
+        Create new template message file .pot
+        """
         print("Creating template message file...")
         args = [
             'bash',
@@ -68,18 +80,26 @@ class MessageCreator:
             print_color(f"Process timeout expired.\n{e}", "ERROR")
         return False
 
-    def make_locale_message_files(self) -> None:
+    def _make_locale_message_files(self) -> None:
+        """
+        Copy template message files .pot to locale massage file .po for each language
+        if there is no .po file for the language.
+        Otherwise, update the .po file to new translation contained in the new .pot file
+        """
         print("Making locale message files...")
         for language in self.LANGUAGES:
-            file_name = self._get_locale_directory(language) + f'/{self.DOMAIN}.po'
+            file_name = self._get_locale_dir_by_language(language) + f'/{self.DOMAIN}.po'
             if not Path(file_name).is_file():
                 shutil.copyfile(self.TEMPLATE_MESSAGE_FILE_NAME, file_name)
                 print_color(f"Created new locale message file: {file_name}", 'OKGREEN')
             else:
-                if not self.update_locale_message_file(file_name):
+                if not self._update_locale_message_file(file_name):
                     raise MessageCreatorError()
 
-    def update_locale_message_file(self, file_name: str) -> bool:
+    def _update_locale_message_file(self, file_name: str) -> bool:
+        """
+        Update the the locale message file .po to new translation contained in the new .pot file
+        """
         args = ['msgmerge', '--update', file_name, self.TEMPLATE_MESSAGE_FILE_NAME]
         try:
             subprocess.run(args, capture_output=True, timeout=2, check=True)
@@ -95,9 +115,13 @@ class MessageCreator:
         return False
 
     def generate_message_objects(self) -> None:
+        """
+        Creates locale message object file .mo for each language from file .po,
+        which has been filled in with new translations by user
+        """
         print_color("Creating locale message object...", 'BOLD')
         for language in self.LANGUAGES:
-            locale_directory = self._get_locale_directory(language)
+            locale_directory = self._get_locale_dir_by_language(language)
             mo_file = f'{locale_directory}/{self.DOMAIN}.mo'
             args = ['msgfmt', '-o', mo_file, f'{locale_directory}/{self.DOMAIN}']
             try:
@@ -108,4 +132,4 @@ class MessageCreator:
             except subprocess.CalledProcessError as e:
                 print_color(f"Process failed: return code {e.returncode}\n{e}", 'ERROR')
             except subprocess.TimeoutExpired as e:
-                print_color(f"Process timeout expired.\n{e}", "ERROR")
+                print_color(f"Process timeout expired.\n{e}", 'ERROR')

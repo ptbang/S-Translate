@@ -1,5 +1,6 @@
 venv
 .env
+!/tests/.env
 locales
 
 # Byte-compiled / optimized / DLL files
@@ -8,3 +9,7 @@ __pycache__/
 *$py.class
 
 dist
+
+/.tox
+/.coverage
+/coverage.xml

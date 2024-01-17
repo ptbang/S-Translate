@@ -1,11 +1,17 @@
 # S-Translation
 
-A package for easily using gettext in python projects
+A package for easy creating and using translated messages with
+[gettext](https://www.gnu.org/software/gettext/) in python projects
+
+[![Pypi](https://img.shields.io/pypi/v/s-translation.svg)](https://pypi.org/project/s-translation/)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/ptbang/s-translate)](https://app.codecov.io/github/ptbang/s-translation)
+[![downloads](https://img.shields.io/pypi/dm/s-tranlation)](https://pypistats.org/packages/s-translation)
+
 
 ## Requirements
 
-- gettext installed in your system ([gettext](https://www.gnu.org/software/gettext/)
-- python 3.10
+- gettext installed in your system ([gettext](https://www.gnu.org/software/gettext/))
+- python: tested for 3.10, 3.11
 - python package `python-dotenv` (`pip install python-dotenv`)
 
 

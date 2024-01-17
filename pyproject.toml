@@ -3,26 +3,28 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "s_translation"
+name = "s-translation"
 version = "1.0.0"
 authors = [
   { name="Bang Phan", email="ptbang@gmail.com" },
 ]
-description = "A package for easily using gettext in python projects"
+description = "A package for easy creating and using translated messages withgettext in python projects"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
-    "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
   "python-dotenv",
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/pypa/sampleproject"
-"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+"Homepage" = "https://github.com/ptbang/S-Translate"
+"Bug Tracker" = "https://github.com/ptbang/S-Translate/issues"
 
 [tool.hatch.build]
 include = ["s_translation"]
